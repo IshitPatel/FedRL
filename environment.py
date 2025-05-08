@@ -8,14 +8,17 @@ class FL_Environment:
         self.num_clients = num_clients
         self.global_class_dist = global_class_dist
 
-    def compute_reward(self, prev_acc, new_acc, client_class_dist):
+    def get_state(self):
+        return self.global_class_dist
+
+    def compute_reward(self, prev_acc, new_acc, client_class_dist, client_part_freq, client_size):
         """Calculate reward based on accuracy improvement and KL divergence."""
         acc_reward = new_acc - prev_acc
         kl_div = entropy(client_class_dist, self.global_class_dist)  # KL-Divergence
-        reward = acc_reward / (0.1 * kl_div)  # Normalize KL divergence effect
+        reward = acc_reward / (0.1 * kl_div * client_part_freq * client_size)  # Normalize KL divergence effect
         return reward
 
-    def step(self, selected_client_indexes, prev_acc, new_acc, client_distributions):
+    def step(self, selected_client_indexes, prev_acc, new_acc, client_distributions, participation_freq, client_sizes):
         """Simulate FL training step and compute reward."""
-        rewards = [self.compute_reward(prev_acc, new_acc, client_distributions[c]) for c in selected_client_indexes]
+        rewards = [self.compute_reward(prev_acc, new_acc, client_distributions[c], participation_freq[c], client_sizes[c]) for c in selected_client_indexes]
         return np.mean(rewards)

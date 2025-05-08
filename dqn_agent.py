@@ -23,13 +23,13 @@ class DQN_Agent:
         self.loss_fn = nn.MSELoss()
         self.epsilon = 0.5
 
-    def select_clients(self, state, num_clients):
+    def select_clients(self, state, num_clients, k=3):
         """Select clients using epsilon-greedy strategy."""
         if np.random.rand() < self.epsilon:
-            return random.sample(range(num_clients), k=3)
+            return random.sample(range(num_clients), k)
         with torch.no_grad():
             q_values = self.model(torch.tensor(state, dtype=torch.float32))
-            return q_values.argsort(descending=True)[:3].tolist()
+            return q_values.argsort(descending=True)[:k].tolist()
 
     def train(self, state, action, reward, next_state):
         """Train the Q-network."""

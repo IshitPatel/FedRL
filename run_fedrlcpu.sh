@@ -3,10 +3,9 @@
 #SBATCH --job-name=fedrl_cpu
 #SBATCH --partition=cpucluster
 #SBATCH --nodes=1
-#SBATCH --nodelist=lmn03
 #SBATCH --ntasks-per-node=1
-#SBATCH --output=logs/fedAvg_cpu_%j.out
-#SBATCH --error=logs/fedAvg_cpu_%j.err
+#SBATCH --output=logs/fedRLcifar_cpu_%j.out
+#SBATCH --error=logs/fedRLcifar_cpu_%j.err
 
 # Activate virtual environment
 source /Users/922917772/FCCL/.venv/bin/activate

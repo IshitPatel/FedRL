@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from models import CNNModel, ResNetFed
+from models import CNNModel, ResNetFed, SimpleMNISTCNN
 from torch.utils import data
 from collections import Counter
 
